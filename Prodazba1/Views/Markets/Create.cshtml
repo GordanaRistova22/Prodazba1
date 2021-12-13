@@ -1,0 +1,37 @@
+﻿@model Prodazba1.Models.MarketClass
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<h2>Add new Market Details</h2>
+<hr />
+Market Id: @Html.EditorFor(model => model.id)
+<br />
+Market Name: @Html.EditorFor(model => model.naziv)
+<br />
+Adress: @Html.EditorFor(model => model.adresa)
+<br />
+City : @Html.EditorFor(model => model.grad)
+<br />
+Rayting: @Html.EditorFor(model => model.rejting)
+<br />
+
+<p>
+    <input type="button" value="Save" onclick="savedetails()" />
+</p>
+<script type="text/javascript">
+    function savedetails() {
+        var id = $("id").val();
+        var naziv = $("naziv").val();
+        var adresa = $("adresa").val();
+        var grad = $("grad").val();
+        var rejting = $("rejting").val();
+
+        var insertemp = { "id": id, "naziv": naziv, "adresa": adresa, "grad": grad, "rejting": rejting }
+        $.post('/market/Create', insertemp,
+            function (data) { if (data == 0) { location = location.href;}}, 'json');
+        alert("Record Inserted Successfuly");
+    }
+</script>
+

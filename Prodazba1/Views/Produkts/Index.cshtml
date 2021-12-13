@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Prodazba1.Models.Produkt>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    @using (Html.BeginForm("Index", "Produkt", FormMethod.Get))
+    {
+
+    }
+    <tr>
+
+        <th>
+            @Html.ActionLink("Naziv", "Index", new { SelectedNaziv = ViewBag.Naziv,SelectedKategorija=ViewBag.Kategorija })
+        </th>
+        <th>
+            @Html.ActionLink("Kategorija", "Index", new object { SelectedNaziv = ViewBag.Naziv, SelectedKategorija = ViewBag.Kategorija })
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+    <th>
+        @Html.DropDownList("SelectedNaziv",
+    new SelectList(ViewBag.UniqueNaziv, "Value", "Text", "ViewBag.SelectedNaziv"), "All", new { onchange = "form.submit();"})
+    </th>
+    <th>
+        @Html.DropDownList("SelectedKategorija",
+    new SelectList(ViewBag.UniqueKategorija, "Value", "Text", "ViewBag.SelectedKategorija"), "All", new { onchange = "form.submit();"})
+    </th>
+
+    <tr/>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kategorija)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

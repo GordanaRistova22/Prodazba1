@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProdazbaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Market">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Adresa" Type="varchar" MaxLength="50" />
+          <Property Name="Grad" Type="varchar" MaxLength="50" />
+          <Property Name="Rejting" Type="float" />
+        </EntityType>
+        <EntityType Name="Prodazba">
+          <Key>
+            <PropertyRef Name="MarketId" />
+            <PropertyRef Name="ProduktId" />
+          </Key>
+          <Property Name="MarketId" Type="int" Nullable="false" />
+          <Property Name="ProduktId" Type="int" Nullable="false" />
+          <Property Name="Cena" Type="int" />
+        </EntityType>
+        <EntityType Name="Produkt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="varchar" MaxLength="50" />
+          <Property Name="Kategorija" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__Prodazba__Market__35BCFE0A">
+          <End Role="Market" Type="Self.Market" Multiplicity="1" />
+          <End Role="Prodazba" Type="Self.Prodazba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prodazba">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prodazba__Produk__36B12243">
+          <End Role="Produkt" Type="Self.Produkt" Multiplicity="1" />
+          <End Role="Prodazba" Type="Self.Prodazba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prodazba">
+              <PropertyRef Name="ProduktId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProdazbaModelStoreContainer">
+          <EntitySet Name="Market" EntityType="Self.Market" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prodazba" EntityType="Self.Prodazba" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produkt" EntityType="Self.Produkt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Prodazba__Market__35BCFE0A" Association="Self.FK__Prodazba__Market__35BCFE0A">
+            <End Role="Market" EntitySet="Market" />
+            <End Role="Prodazba" EntitySet="Prodazba" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prodazba__Produk__36B12243" Association="Self.FK__Prodazba__Produk__36B12243">
+            <End Role="Produkt" EntitySet="Produkt" />
+            <End Role="Prodazba" EntitySet="Prodazba" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProdazbaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Market">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Grad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rejting" Type="Double" />
+          <NavigationProperty Name="Prodazbas" Relationship="Self.FK__Prodazba__Market__35BCFE0A" FromRole="Market" ToRole="Prodazba" />
+        </EntityType>
+        <EntityType Name="Prodazba">
+          <Key>
+            <PropertyRef Name="MarketId" />
+            <PropertyRef Name="ProduktId" />
+          </Key>
+          <Property Name="MarketId" Type="Int32" Nullable="false" />
+          <Property Name="ProduktId" Type="Int32" Nullable="false" />
+          <Property Name="Cena" Type="Int32" />
+          <NavigationProperty Name="Market" Relationship="Self.FK__Prodazba__Market__35BCFE0A" FromRole="Prodazba" ToRole="Market" />
+          <NavigationProperty Name="Produkt" Relationship="Self.FK__Prodazba__Produk__36B12243" FromRole="Prodazba" ToRole="Produkt" />
+        </EntityType>
+        <EntityType Name="Produkt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Kategorija" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Prodazbas" Relationship="Self.FK__Prodazba__Produk__36B12243" FromRole="Produkt" ToRole="Prodazba" />
+        </EntityType>
+        <Association Name="FK__Prodazba__Market__35BCFE0A">
+          <End Role="Market" Type="Self.Market" Multiplicity="1" />
+          <End Role="Prodazba" Type="Self.Prodazba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Market">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prodazba">
+              <PropertyRef Name="MarketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prodazba__Produk__36B12243">
+          <End Role="Produkt" Type="Self.Produkt" Multiplicity="1" />
+          <End Role="Prodazba" Type="Self.Prodazba" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produkt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prodazba">
+              <PropertyRef Name="ProduktId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProdazbaEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Markets" EntityType="Self.Market" />
+          <EntitySet Name="Prodazbas" EntityType="Self.Prodazba" />
+          <EntitySet Name="Produkts" EntityType="Self.Produkt" />
+          <AssociationSet Name="FK__Prodazba__Market__35BCFE0A" Association="Self.FK__Prodazba__Market__35BCFE0A">
+            <End Role="Market" EntitySet="Markets" />
+            <End Role="Prodazba" EntitySet="Prodazbas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prodazba__Produk__36B12243" Association="Self.FK__Prodazba__Produk__36B12243">
+            <End Role="Produkt" EntitySet="Produkts" />
+            <End Role="Prodazba" EntitySet="Prodazbas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProdazbaModelStoreContainer" CdmEntityContainer="ProdazbaEntities1">
+          <EntitySetMapping Name="Markets">
+            <EntityTypeMapping TypeName="ProdazbaModel.Market">
+              <MappingFragment StoreEntitySet="Market">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Grad" ColumnName="Grad" />
+                <ScalarProperty Name="Rejting" ColumnName="Rejting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prodazbas">
+            <EntityTypeMapping TypeName="ProdazbaModel.Prodazba">
+              <MappingFragment StoreEntitySet="Prodazba">
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="ProduktId" ColumnName="ProduktId" />
+                <ScalarProperty Name="Cena" ColumnName="Cena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produkts">
+            <EntityTypeMapping TypeName="ProdazbaModel.Produkt">
+              <MappingFragment StoreEntitySet="Produkt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Kategorija" ColumnName="Kategorija" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

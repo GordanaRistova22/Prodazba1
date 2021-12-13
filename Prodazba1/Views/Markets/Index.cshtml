@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Prodazba1.Models.Market>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+   <input type="button" value="Add new Market" onclick="createpopup()"/>
+</p>
+@{ 
+    WebGrid wbgrid = new WebGrid(source: Model);
+    @wbgrid.GetHtml(
+    tableStyle:"table",
+    columns:new[]
+    {
+        wbgrid.Column("Id","Id"),
+        wbgrid.Column("Naziv","Naziv"),
+        wbgrid.Column("Adresa","Adresa"),
+        wbgrid.Column("Grad","Grad"),
+        wbgrid.Column("Rejting","Rejting")
+    })
+}
+<div id="openpopup" style="display:none"></div>
+<script type="text/javascript">
+    function createpopup() {
+        var x = $("#openpopup");
+        x.load('/market/Create', function () {
+            x.dialog({
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                },
+                model: true,
+                width: 450,
+                height: 500,
+                Title: "Add new Market",
+                resizable: false
+            });
+        });
+    }
+</script>

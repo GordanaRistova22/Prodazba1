@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">My first MVC Project With SQL Server Database.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Produkts","Index","Produkts")</h2>
+        <p>CRUD Operations.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Markets", "Index", "Markets")</h2>
+        <p>CRUD Operations.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>@Html.ActionLink("Prodazbas", "Index", "Prodazbas")</h2>
+        <p>CRUD Operations.</p>
+    </div>
+</div>
